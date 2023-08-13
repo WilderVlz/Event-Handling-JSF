@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"> <!-- este es un identificador unico en el cual 
+    obtenemos las etiquetas de la libreria especificada en este caso de core-->
+    <head>
+        <title>Hola mundo JSF</title>
+    </head>
+    <body>
+        <!-- aqui definimos el nombre del formulario al cual accederemos despues desde nuestra
+        clase de backing-->
+        <h:form id="vacanteForm">
+            <!-- con esto mostramos los mesajes globales -->
+            <h:messages globalOnly="true"></h:messages>
+            <table>
+                <tr>
+                    <!-- aca estamos utilizando en el value la internacionalizacion de mensajes,
+                    en este caso utilizamos EL con la variable msgs que definimos en el archivo
+                    faces-config y accedemos a la propiedad de nuestra clase mensajes.properties-->
+                    <td><h:outputLabel for="nombre" value="#{msgs['vacanteForm.nombre']}"></h:outputLabel></td>
+                    <!-- con esta instruccion estamos accediendo al nombre de nuestro 
+                    managed bean, aca se usa en ves de $ se usa # para el EL-->
+                    <!-- aqui la validacion la agregamos con la etiquieta required="true" -->
+                    <td><h:inputText id="nombre" required="true" value="#{candidato.nombre}"></h:inputText></td>
+                    <!-- con esta etiqueta mostramos todo cualquier comentario 
+                    relacionado al input 'nombre' -->
+                    <td><h:message for="nombre"></h:message></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel for="apellido" value="#{msgs['vacanteForm.apellido']}"></h:outputLabel></td>
+                    <td><h:inputText id="apellido" required="true" value="#{candidato.apellido}"></h:inputText></td>
+                    <td><h:message for="apellido"></h:message></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel for="salarioDeseado" value="#{msgs['vacanteForm.salarioDeseado']}"></h:outputLabel></td>
+                    <td><h:inputText id="salarioDeseado" required="true" value="#{candidato.salarioDeseado}">
+                            <!-- con esta etiqueta utilizamos una validacion de la libreria de core,
+                            en este caso para agregarle un limite de rango al sueldo-->
+                            <f:validateLongRange minimum="500" maximum="50000"></f:validateLongRange>
+                        </h:inputText>
+                    </td>
+                    <td><h:message for="salarioDeseado"></h:message></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel for="fechaNacimiento" value="#{msgs['vacanteForm.fechaNacimiento']}"></h:outputLabel></td>
+                    <td><h:inputText id="fechaNacimiento" required="true" value="#{candidato.fechaNacimiento}">
+                            <!-- aca estamos convirtiendo la cadena ingresada a un tipo Date -->
+                            <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+                        </h:inputText>
+                    </td>
+                    <td><h:message for="fechaNacimiento"></h:message></td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel for="codigoPostal" value="#{msgs['vacanteForm.codigoPostal']}"></h:outputLabel></td>
+                    <!-- aqui definimos este elemento se debe procesar de forma  
+                    inmediata una vez escrito o modificado el valor, tambien definimos que se haga
+                    el submit del formulario-->
+                    <!-- tambien agregamos que será un campo requerido, le asignamos el valor de nuestro managed bean
+                    y agregamos valueChangeListener para hacer un llamado al metodo que definimos anteriormente en 
+                    nuestra clase backing-->
+                    <td><h:inputText id="codigoPostal" immediate="true" onchange="this.form.submit()" required="true" value="#{candidato.codigoPostal}"
+                                     valueChangeListener="#{vacanteForm.codigoPostalListener}"></h:inputText></td>
+                    <td>
+                        <h:message for="codigoPostal"></h:message>
+                    </td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel for="colonia" value="#{msgs['vacanteForm.colonia']}"></h:outputLabel></td>
+                    <td><h:inputText id="colonia" required="true" value="#{candidato.colonia}"></h:inputText>
+                    </td>
+                    <td>
+                        <h:message for="colonia"></h:message>
+                    </td>
+                </tr>
+                <tr>
+                    <td><h:outputLabel for="ciudad" value="#{msgs['vacanteForm.ciudad']}"></h:outputLabel></td>
+                    <td><h:inputText id="ciudad" required="true" value="#{candidato.ciudad}"></h:inputText>
+                    </td>
+                    <td>
+                        <h:message for="ciudad"></h:message>
+                    </td>
+                </tr>
+            </table>
+            <h:commandButton action="#{vacanteForm.enviar}" value="#{msgs['vacanteForm.enviar']}"></h:commandButton>
+        </h:form>
+    </body>
+</html>

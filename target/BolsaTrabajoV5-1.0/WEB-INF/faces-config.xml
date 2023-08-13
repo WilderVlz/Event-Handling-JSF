@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                                  http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd"
+              version="2.3">
+    <lifecycle>
+        <!-- aca configuramos el face listener que definimos anteriormente en nuestra 
+        clase de java-->
+        <phase-listener>
+            beans.lifecycle.DebuggerListener
+        </phase-listener>
+    </lifecycle>
+    <!--aca definimos el lenguaje por defecto, en este caso
+    sera español-->
+    <application>
+        <locale-config>
+            <default-locale>es</default-locale>
+        </locale-config>
+        <!--aca asignamos la clase que creamos para las 
+            etiquetas en este lenguaje, podemos omitir
+        la extencion del archivo-->
+        <resource-bundle>
+            <base-name>mensajes</base-name>
+            <!-- aca asociamos el nombre de variable el cual
+            utilizaremos desde nuestra pagina jsf-->
+            <var>msgs</var>
+        </resource-bundle>
+        <!-- aca asociamos el archivo jsf.properties para el valor requerido-->
+        <message-bundle>jsf</message-bundle>
+    </application>
+</faces-config>
